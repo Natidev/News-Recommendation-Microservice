@@ -1,0 +1,35 @@
+services:
+  postgres:
+    container_name: user_db
+    image: postgres
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pgpassword
+      POSTGRES_INITDB_ARGS: '--encoding=UTF-8 --lc-collate=C --lc-ctype=C'
+    volumes:
+      - postgres:/var/lib/postgresql/data/
+    ports:
+      - "5499:5432"
+    networks:
+      - ms-net
+    restart: unless-stopped
+
+  mongodb:
+    container_name: news_db
+    image: mongo
+    ports:
+      - "5060:27017"
+    volumes:
+      - mongo:/data/db
+    networks:
+      - ms-net
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: newsadmin
+      MONGO_INITDB_ROOT_PASSWORD: newspass
+networks:
+  ms-net:
+    driver: bridge
+volumes:
+  postgres:
+    driver: local
+  mongo:
