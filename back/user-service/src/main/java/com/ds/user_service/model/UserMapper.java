@@ -16,6 +16,14 @@ public class UserMapper {
                 .role(List.of())
                 .build();
     }
+    public User toUser(String username,String password){
+        return User
+                .builder()
+                .username(username)
+                .password(password)
+                .role(List.of())
+                .build();
+    }
     public UserResponse toUserResponse(User user){
         return new UserResponse(
                 user.getUsername(),

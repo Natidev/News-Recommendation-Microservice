@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 @RestController
+@RequestMapping(path = "/auth")
 @RequiredArgsConstructor
 @Validated
 public class UserController {
     private final AuthService authService;
-
     @PostMapping
     ResponseEntity<UserResponse> createUser(
             @RequestBody UserRequest user
