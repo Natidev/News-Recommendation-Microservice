@@ -13,6 +13,7 @@ import org.jspecify.annotations.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,8 @@ public class AuthService {
     }
 
     public  Map<String, String> authenticate(HttpServletResponse response, UserRequest u) {
+        try{
+
                 authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         u.username(),
@@ -51,7 +54,10 @@ public class AuthService {
         cookie.setHttpOnly(true);
         cookie.setPath("api/users/refresh");
         cookie.setMaxAge(jwtService.getExpiration());
-        response.addCookie(cookie);
+        response.addCookie(cookie);}
+        catch(Exception e){
+            System.out.println(e);
+        }
         return Map.of(
                         "token",jwtService.generateToken(u.username())
                 );

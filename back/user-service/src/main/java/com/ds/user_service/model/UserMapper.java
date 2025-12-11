@@ -13,6 +13,7 @@ public class UserMapper {
                 .builder()
                 .username(userRequest.username())
                 .password(userRequest.password())
+                .role(List.of())
                 .build();
     }
     public UserResponse toUserResponse(User user){

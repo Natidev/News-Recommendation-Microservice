@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
-    UserRepository repo;
+    private  final UserRepository repository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user=repo.findById(username).orElseThrow(
+        var user=repository.findById(username).orElseThrow(
                 ()->new UserNotFoundException(String.format("Couldn't find user with the id %s",username)));
 
         return org.springframework.security.core.userdetails.User.withUsername(user.getUsername())
