@@ -1,5 +1,6 @@
 package com.ds.user_service.configurations;
 
+import com.ds.user_service.converter.JwtServerAuthenticationConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,11 +13,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import com.ds.user_service.service.CustomUserDetailService;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -37,13 +41,17 @@ public class SecurityConfig {
 //) {
 //        return authenticationConfiguration.getAuthenticationManager();
 //}
-    private final JWTAuthenticationManager jwtAuthenticationManager;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
     @Bean
-    public SecurityFilterChain filterChain(ServerHttpSecurity http) throws Exception {
+    public SecurityWebFilterChain filterChain(ServerHttpSecurity http,
+                                              JWTAuthenticationManager authManager,
+                                              JwtServerAuthenticationConverter converter) throws Exception {
+        AuthenticationWebFilter filter = new AuthenticationWebFilter(authManager);
+        filter.setServerAuthenticationConverter(converter);
+
         return http.csrf(csrf -> csrf.disable())
                 .authorizeExchange(auth->
                         auth
@@ -53,7 +61,9 @@ public class SecurityConfig {
                                 "/v3/api-docs/**").permitAll()
                                 .anyExchange().authenticated()
                 )
-                .authenticationManager(J)
+                .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
+                .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
+                .addFilterAt(filter, SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();
     }
 }
