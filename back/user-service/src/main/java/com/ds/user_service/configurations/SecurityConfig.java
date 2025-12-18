@@ -17,8 +17,7 @@ import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
 
@@ -53,9 +52,11 @@ public class SecurityConfig {
         filter.setServerAuthenticationConverter(converter);
 
         return http.csrf(csrf -> csrf.disable())
+                .authenticationManager(authManager)
                 .authorizeExchange(auth->
                         auth
-                                .pathMatchers("/auth/**",
+                                .pathMatchers("/auth/login",
+                                        "/auth/refresh",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**").permitAll()
@@ -66,4 +67,5 @@ public class SecurityConfig {
                 .addFilterAt(filter, SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();
     }
+
 }
