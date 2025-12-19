@@ -28,7 +28,12 @@ management:
 
 fetcher:
   topic: news-raw
-
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8901/eureka
 news:
   providers:
     - name: "BBC"

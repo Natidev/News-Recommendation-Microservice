@@ -13,7 +13,19 @@ spring:
               predicates:
                 - Path=/user/**
               filters:
-                - RewritePath=/user/(?<remaining>.*), /${remaining}
+                - RewritePath=/user/(?<remaining>.*),/${remaining}
+            - id: news-service
+              uri: lb://NEWS-SERVICE
+              predicates:
+                - Path=/news/**
+              filters:
+                - RewritePath=/user/(?<remaining>.*),/${remaining}
+            - id: news-fetcher
+              uri: lb://NEWS-FETCHER
+              predicates:
+                - Path=/fetcher/**
+              filters:
+                - RewritePath=/user/(?<remaining>.*),/${remaining}
 
     discovery:
       locator:
