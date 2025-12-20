@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: recommendation-service
+  kafka:
+    bootstrap-servers: localhost:29092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all
+      retries: 3
+    consumer:
+      group-id: enriched-news-consumer-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      auto-offset-reset: earliest
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.value.default.type: com.ds.recommendationservice.models.EnrichedNewsPayload
+        spring.json.use.type.headers: false
+
+news:
+  enriched_news_topic: enriched_news
+  recommendation_created_topic: recommendation.created
