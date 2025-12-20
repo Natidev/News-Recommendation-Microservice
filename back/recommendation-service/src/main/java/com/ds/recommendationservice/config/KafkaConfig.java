@@ -1,6 +1,7 @@
-package com.ds.news.config;
+package com.ds.recommendationservice.config;
 
-import com.ds.news.models.payloads.RawNewsPayload;
+import com.ds.recommendationservice.models.EnrichedNewsPayload;
+import com.ds.recommendationservice.models.RecommendationCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.kafka.autoconfigure.KafkaProperties;
@@ -18,33 +19,32 @@ import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
-public class NewsKafkaConfig {
+public class KafkaConfig {
     private final KafkaProperties kafkaProperties;
 
-    @Value("${news.topic}")
-    private String raw_news_fetch_topic;
+    @Value("${news.enriched_news_topic}")
+    private String enriched_news_topic;
 
     @Bean
-    public SenderOptions<String, RawNewsPayload> senderOptions(ProducerFactory<String, RawNewsPayload> producerFactory) {
+    public SenderOptions<String, RecommendationCreatedEvent> senderOptions(ProducerFactory<String, RecommendationCreatedEvent> producerFactory){
         Map<String, Object> config = new HashMap<>(producerFactory.getConfigurationProperties());
         return SenderOptions.create(config);
     }
 
     @Bean
-    public KafkaSender<String, RawNewsPayload> kafkaSender(SenderOptions<String, RawNewsPayload> senderOptions) {
+    public KafkaSender<String, RecommendationCreatedEvent> kafkaSender(SenderOptions<String, RecommendationCreatedEvent> senderOptions){
         return KafkaSender.create(senderOptions);
     }
 
     @Bean
-    public ReceiverOptions<String, RawNewsPayload> receiverOptions() {
+    public ReceiverOptions<String, EnrichedNewsPayload> receiverOptions(){
         Map<String, Object> config = new HashMap<>(kafkaProperties.buildConsumerProperties());
-        return ReceiverOptions.<String, RawNewsPayload>create(config)
-                .subscription(Collections.singleton(raw_news_fetch_topic));
+        return ReceiverOptions.<String, EnrichedNewsPayload>create(config)
+                .subscription(Collections.singleton(enriched_news_topic));
     }
 
     @Bean
-    public KafkaReceiver<String, RawNewsPayload> kafkaReceiver(ReceiverOptions<String, RawNewsPayload> receiverOptions) {
+    public KafkaReceiver<String, EnrichedNewsPayload> kafkaReceiver(ReceiverOptions<String, EnrichedNewsPayload> receiverOptions){
         return KafkaReceiver.create(receiverOptions);
     }
-
 }

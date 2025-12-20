@@ -1,6 +1,6 @@
 spring:
   application:
-    name: news
+    name: recommendation-service
   kafka:
     bootstrap-servers: localhost:29092
     producer:
@@ -9,20 +9,15 @@ spring:
       acks: all
       retries: 3
     consumer:
-      group-id: raw-news-consumer-group
+      group-id: enriched-news-consumer-group
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       auto-offset-reset: earliest
       properties:
         spring.json.trusted.packages: "*"
-        spring.json.value.default.type: com.ds.news.models.payloads.RawNewsPayload
+        spring.json.value.default.type: com.ds.recommendationservice.models.EnrichedNewsPayload
         spring.json.use.type.headers: false
-  mongodb:
-    uri: mongodb://newsadmin:newspass@localhost:5060/news?authSource=admin
 
 news:
-  topic: raw-news
   enriched_news_topic: enriched_news
-
-server:
-  port: 8081
+  recommendation_created_topic: recommendation.created
