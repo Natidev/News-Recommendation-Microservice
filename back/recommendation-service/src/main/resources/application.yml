@@ -1,3 +1,5 @@
+server:
+  port: 8904
 spring:
   application:
     name: recommendation-service
