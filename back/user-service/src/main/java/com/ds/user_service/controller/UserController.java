@@ -24,7 +24,7 @@ public class UserController {
     ){
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.createUser(user));
     }
-
+    
     @GetMapping("/refresh")
     ResponseEntity<Map<String,String>> refresh(
             @CookieValue(value = "refresh-token") String refreshToken
