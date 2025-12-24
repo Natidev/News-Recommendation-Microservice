@@ -38,9 +38,5 @@ public class UserController {
     ){
         return ResponseEntity.ok(authService.authenticate(u));
     }
-    @ExceptionHandler(BadCredentialsException.class)
-    ResponseEntity<?> handleUnauthenticated(){
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    }
 
 }
