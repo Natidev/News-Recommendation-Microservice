@@ -1,6 +1,6 @@
-package com.ds.news.ai;
+package com.ds.recommendationservice.config;
 
-import com.ds.news.models.record.AiEnrichmentResult;
+import com.ds.recommendationservice.models.AiEnrichmentResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

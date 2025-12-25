@@ -1,4 +1,4 @@
-package com.ds.news.config;
+package com.ds.recommendationservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

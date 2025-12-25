@@ -1,4 +1,4 @@
-package com.ds.news.models.record;
+package com.ds.recommendationservice.models;
 
 public record AiEnrichmentResult(
 //        String summary,
