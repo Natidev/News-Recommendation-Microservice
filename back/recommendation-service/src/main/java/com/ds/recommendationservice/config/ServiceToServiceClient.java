@@ -17,4 +17,5 @@ public interface ServiceToServiceClient {
     }
 
     Flux<UserRecommendationProfile> findInterestedUsers(EnrichedNewsPayload news);
+    Mono<EnrichedNewsPayload> getNewsById(String id);
 }

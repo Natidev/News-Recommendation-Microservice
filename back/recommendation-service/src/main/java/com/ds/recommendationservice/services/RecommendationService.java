@@ -1,13 +1,18 @@
 package com.ds.recommendationservice.services;
 
+import com.ds.recommendationservice.config.ExternalServiceClient;
+import com.ds.recommendationservice.config.ServiceToServiceClient;
 import com.ds.recommendationservice.models.Decision;
 import com.ds.recommendationservice.models.EnrichedNewsPayload;
 import com.ds.recommendationservice.models.RecommendationCreatedEvent;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.kafka.sender.KafkaSender;
 import reactor.kafka.sender.SenderRecord;
@@ -21,6 +26,7 @@ public class RecommendationService {
     private final RelevanceEvaluatorService relevanceEvaluatorService;
     private final RecommendationStore recommendationStore;
     private final KafkaSender<String, RecommendationCreatedEvent> kafkaSender;
+    private final ServiceToServiceClient  serviceToServiceClient;
 
     @Value("${news.recommendation_created_topic}")
     private String newsRecommendationCreatedTopic;
@@ -73,4 +79,23 @@ public class RecommendationService {
                 )
                 .then();
     }
+
+    public Flux<EnrichedRecommendation> getRecommendationForUser(String userId) {
+        return recommendationStore.getRecommendations(userId)
+                .flatMap(recommendation ->
+                        serviceToServiceClient.getNewsById(recommendation.getNewsId())
+                                .map(news -> {
+                                    news.setEmbedding(null);
+                                    return new EnrichedRecommendation(recommendation, news);
+                                })
+                );
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class EnrichedRecommendation {
+        private RecommendationCreatedEvent recommendation;
+        private EnrichedNewsPayload news;
+    }
+
 }

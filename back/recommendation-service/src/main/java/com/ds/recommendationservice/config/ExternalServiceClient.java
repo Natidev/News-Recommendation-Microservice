@@ -24,6 +24,9 @@ public class ExternalServiceClient implements ServiceToServiceClient {
     @Value("${uri.user_service}")
     private String user_service;
 
+    @Value("${uri.news_service}")
+    private String news_service;
+
     @Override
     public Mono<AiEnrichmentResult> enrich(String text) {
         return webClient.post()
@@ -49,5 +52,15 @@ public class ExternalServiceClient implements ServiceToServiceClient {
                 .retrieve()
                 .bodyToFlux(UserRecommendationProfile.class);
     }
+
+    @Override
+    public Mono<EnrichedNewsPayload> getNewsById(String id) {
+        return webClient.get()
+                .uri(news_service + "/news/{id}", id)
+                .retrieve()
+                .onStatus(status -> status.is4xxClientError(), response -> Mono.empty())
+                .bodyToMono(EnrichedNewsPayload.class);
+    }
+
 
 }
