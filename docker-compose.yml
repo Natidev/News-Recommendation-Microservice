@@ -81,6 +81,7 @@ services:
       - EUREKA_HOST=gateway
       - DEFAULT_ZONE=http://discovery:8901/eureka
       - jwt_secret=${jwt_secret}
+      - AI_SERVICE_URL=http://ai-service:8999
     ports:
       - 7000:8900
   user-service:

@@ -45,7 +45,7 @@ spring:
         lower-case-service-id: true
 
 ai-service:
-  url: http://localhost:8999
+  url: ${AI_SERVICE_URL:http://localhost:8999}
 
 management:
   endpoints:

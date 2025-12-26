@@ -14,7 +14,6 @@ RUN ./mvnw clean package -DskipTests
 
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
-
 RUN apk add --no-cache libgcc libstdc++
 RUN addgroup -S spring && adduser -S spring -G spring
 

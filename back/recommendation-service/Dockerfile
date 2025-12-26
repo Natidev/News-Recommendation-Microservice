@@ -6,6 +6,7 @@ COPY mvnw .
 COPY .mvn .mvn
 RUN chmod +x mvnw
 
+RUN apk add --no-cache libgcc libstdc++
 COPY pom.xml .
 RUN ./mvnw dependency:go-offline -B
 
