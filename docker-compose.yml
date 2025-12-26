@@ -78,7 +78,7 @@ services:
     networks:
       - ms-net
     environment:
-      - EUREKA_HOST=discovery
+      - EUREKA_HOST=gateway
       - DEFAULT_ZONE=http://discovery:8901/eureka
       - jwt_secret=${jwt_secret}
     ports:
@@ -91,6 +91,7 @@ services:
     networks:
       - ms-net
     environment:
+      - EUREKA_HOST=user-service
       - jwt_secret=${jwt_secret}
       - PG_DATABASE_URL=r2dbc:postgresql://postgres:5432/auth
       - DEFAULT_ZONE=http://discovery:8901/eureka
@@ -106,6 +107,7 @@ services:
       - kafka
     environment:
       DEFAULT_ZONE: http://discovery:8901/eureka
+      EUREKA_HOST: news-service
       KAFKA_SERVER: http://kafka:29092
       MONGODB_URL: mongodb://newsadmin:newspass@mongodb:27017/news?authSource=admin
       EMBEDDING_URI: http//ai-service:8999
@@ -120,6 +122,7 @@ services:
       - redis
     environment:
       DEFAULT_ZONE: http://discovery:8901/eureka
+      EUREKA_HOST: news-fetcher-service
       KAFKA_SERVER: kafka:29092
       REDIS_URL: redis://redis:6379/0
   recommendation-service:
@@ -136,6 +139,7 @@ services:
       KAFKA_SERVER: kafka:29092
       EMBEDDING_URI: http//ai-service:8999
       USER_SERVICE_URL: http://user-service:8080
+      EUREKA_HOST:  recommendation-service
 networks:
   ms-net:
     driver: bridge
