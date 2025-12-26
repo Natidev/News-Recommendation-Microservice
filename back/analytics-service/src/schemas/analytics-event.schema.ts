@@ -46,4 +46,5 @@ export class AnalyticsEvent extends Document {
   metric?: Metric;
 }
 
-export const AnalyticsEventSchema = SchemaFactory.createForClass(AnalyticsEvent);
+export const AnalyticsEventSchema =
+  SchemaFactory.createForClass(AnalyticsEvent);
