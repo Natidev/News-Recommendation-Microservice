@@ -43,10 +43,10 @@ services:
       KAFKA_PROCESS_ROLES: "broker,controller"
       KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka:9093"
 
-      # ---- LISTENERS ----
-      KAFKA_LISTENERS: "CONTROLLER://kafka:9093,PLAINTEXT://kafka:9092,PLAINTEXT_HOST://0.0.0.0:29092"
 
-      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092"
+      KAFKA_LISTENERS: "CONTROLLER://kafka:9093,PLAINTEXT://kafka:9092,PLAINTEXT_HOST://kafka:29092"
+
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092,PLAINTEXT_HOST://kafka:29092"
 
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
 
@@ -120,10 +120,22 @@ services:
       - redis
     environment:
       DEFAULT_ZONE: http://discovery:8901/eureka
-      KAFKA_SERVER: http://kafka:29092
+      KAFKA_SERVER: kafka:29092
       REDIS_URL: redis://redis:6379/0
   recommendation-service:
     build: ./back/recommendation-service
+    depends_on:
+      - ai-service
+      - user-service
+      - kafka
+      - discovery
+    networks:
+      - ms-net
+    environment:
+      DEFAULT_ZONE: http://discovery:8901/eureka
+      KAFKA_SERVER: kafka:29092
+      EMBEDDING_URI: http//ai-service:8999
+      USER_SERVICE_URL: http://user-service:8080
 networks:
   ms-net:
     driver: bridge
