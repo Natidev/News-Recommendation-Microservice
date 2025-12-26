@@ -17,6 +17,7 @@ This repository uses a **dual-branch structure**:
 
 The backend follows a microservices architecture with event-driven communication. Each service is independently deployable and scalable.
 
+![Service Architecture](./docs/kubernetes_architecture.png)
 ### Service Overview
 
 #### 1. **User Service**
