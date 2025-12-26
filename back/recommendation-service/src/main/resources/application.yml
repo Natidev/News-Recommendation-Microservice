@@ -27,3 +27,4 @@ news:
 uri:
   embedding_uri: http://localhost:8999
   user_service: http://localhost:8080
+  news_service: http://localhost:8902
