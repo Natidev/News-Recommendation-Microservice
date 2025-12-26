@@ -85,10 +85,13 @@ springdoc:
       - name: user-service
         url: /user/v3/api-docs
 
-#      - name: news-fetcher
-#        url: /fetcher/v3/api-docs
+      - name: news-fetcher
+        url: /fetcher/v3/api-docs
 
       - name: news-service
+        url: /news/v3/api-docs
+
+      - name: recommendation-service
         url: /news/v3/api-docs
 
     disable-swagger-default-url: true
