@@ -60,6 +60,8 @@ services:
   redis:
     image: redis:7.2
     container_name: redis
+    networks:
+      - ms-net
     ports:
       - "26379:6379"
     command: ["redis-server", "--appendonly", "no"]
@@ -111,8 +113,15 @@ services:
     build: ./back/ai-service
   news-fetcher-service:
     build: ./back/news-fetcher
+    networks:
+      - ms-net
     depends_on:
       - discovery
+      - redis
+    environment:
+      DEFAULT_ZONE: http://discovery:8901/eureka
+      KAFKA_SERVER: http://kafka:29092
+      REDIS_URL: redis://redis:6379/0
   recommendation-service:
     build: ./back/recommendation-service
 networks:
