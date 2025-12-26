@@ -12,6 +12,21 @@ This repository uses a **dual-branch structure**:
 - **`front` branch**: Contains the frontend application (web/mobile interface)
 	
 - **`back` branch**: Contains all backend microservices and infrastructure
+## How to run
+### Prerequisites
+
+- Docker and Docker Compose
+
+### Steps
+1. Navigate to the root directory using the preferred terminal.
+2. RUN
+
+```shell
+docker compose up -d --build 
+```
+![The output would look like this](./docs/step_2.png)
+3. Access services using the gateway port at `7000`
+![Gateway will show the swagger documentation](./docs/step_3.png)
 
 ##  Backend Architecture
 
@@ -142,19 +157,6 @@ The backend follows a microservices architecture with event-driven communication
 - **Styling**: Component Library
     
 
-## Getting Started
-
-### Prerequisites
-
-- Docker and Docker Compose
-    
-- Python 3.x / Java 17
-    
-- Message Broker (Kafka/RabbitMQ)
-	
-- Gradle/Maven
-	
-- Node 20 or later
 
 ### Backend Setup (Back Branch)
 
