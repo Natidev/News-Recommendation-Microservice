@@ -84,8 +84,9 @@ services:
     depends_on:
       - discovery
     environment:
-      - jwt_secret=${jwt_secret}
-      -
+      - jwt_secret=jwt_secret
+      - PG_DATABASE_URL=r2dbc:postgresql://postgres:5499/auth
+      - DEFAULT_ZONE=http://discovery:8901/eureka
 
   news-service:
     build: ./back/news
