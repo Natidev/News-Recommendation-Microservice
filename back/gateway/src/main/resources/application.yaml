@@ -18,8 +18,8 @@ spring:
               uri: lb://NEWS-SERVICE
               predicates:
                 - Path=/news/**
-#              filters:
-#                - RewritePath=/news/(?<remaining>.*),/${remaining}
+              filters:
+                - RewritePath=/news/(?<remaining>.*),/${remaining}
             - id: news-fetcher
               uri: lb://NEWS-FETCHER
               predicates:
