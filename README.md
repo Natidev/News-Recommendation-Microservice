@@ -20,13 +20,12 @@ This repository uses a **dual-branch structure**:
 ### Steps
 1. Navigate to the root directory using the preferred terminal.
 2. RUN
-
 ```shell
 docker compose up -d --build 
 ```
-![The output would look like this](./docs/step_2.png)
 3. Access services using the gateway port at `7000`
-![Gateway will show the swagger documentation](./docs/step_3.png)
+<img src="./docs/step_3.png" alt="Description" width="600" />
+
 
 ##  Backend Architecture
 
