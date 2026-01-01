@@ -33,7 +33,7 @@ spring:
               filters:
                 - RewritePath=/recommendations/(?<remaining>.*),/${remaining}
             - id: ai-service
-              uri: ${ai-service.url}
+              uri: ${AI_SERVICE_URI}
               predicates:
                 - Path=/ai/**
               filters:
