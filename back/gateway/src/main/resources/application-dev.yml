@@ -2,6 +2,6 @@ server:
   port: 8900
 spring:
   config:
-    import: "optional:config-server:http://localhost:8910"
+    import: "optional:configserver:http://localhost:8910"
   application:
     name: gateway
