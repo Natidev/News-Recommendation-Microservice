@@ -1,0 +1,21 @@
+spring:
+  r2dbc:
+    username: pguser
+    password: pgpassword
+    url: r2dbc:postgresql://localhost:5499/auth
+  flyway:
+    user: pguser
+    password: pgpassword
+    url: jdbc:postgresql://localhost:5499/auth
+jwt:
+  secret: ${JWT_SECRET}
+
+uri:
+  embedding_uri: http://localhost:8999
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8901/eureka

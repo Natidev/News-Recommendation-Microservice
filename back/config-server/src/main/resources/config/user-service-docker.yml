@@ -1,0 +1,21 @@
+spring:
+  r2dbc:
+    username: pguser
+    password: pgpassword
+    url: ${PG_DATABASE_URL}
+  flyway:
+    user: pguser
+    password: pgpassword
+    url: ${FLYWAY_DB_URL}
+  jwt:
+    secret: ${jwt_secret}
+
+uri:
+  embedding_uri: ${EMBEDDING_URI:http://ai-service:8999}
+
+eureka:
+  instance:
+    hostname: ${EUREKA_HOST}
+  client:
+    service-url:
+      defaultZone: ${DEFAULT_ZONE}
