@@ -1,0 +1,7 @@
+server:
+  port: 8903
+spring:
+  application:
+    name: news-fetcher-service
+  config:
+    import: "optional:configserver:http://localhost:8910"

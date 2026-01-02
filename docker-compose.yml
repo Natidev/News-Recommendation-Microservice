@@ -81,7 +81,7 @@ services:
       - EUREKA_HOST=gateway
       - DEFAULT_ZONE=http://discovery:8901/eureka
       - jwt_secret=${jwt_secret}
-      - AI_SERVICE_URL=http://ai-service:8999
+      - AI_SERVICE_URI=http://ai-service:8999
     ports:
       - 7000:8900
   user-service:
@@ -94,10 +94,10 @@ services:
     environment:
       - EUREKA_HOST=user-service
       - jwt_secret=${jwt_secret}
+      - ai-service
       - PG_DATABASE_URL=r2dbc:postgresql://postgres:5432/auth
       - DEFAULT_ZONE=http://discovery:8901/eureka
       - FLYWAY_DB_URL=jdbc:postgresql://postgres:5432/auth
-
   news-service:
     build: ./back/news
     networks:

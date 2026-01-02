@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: recommendation-service
+  mail:
+    host: ${MAILDEV_HOST}
+    port: ${MAILDEV_PORT}
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVER}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all
+      retries: 3
+    consumer:
+      group-id: enriched-news-consumer-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      auto-offset-reset: earliest
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.value.default.type: com.ds.recommendationservice.models.EnrichedNewsPayload
+        spring.json.use.type.headers: false
+eureka:
+  instance:
+    hostname: ${EUREKA_HOST}
+  client:
+    service-url:
+      defaultZone: ${DEFAULT_ZONE}
+news:
+  enriched_news_topic: enriched_news
+  recommendation_created_topic: recommendation.created
+
+uri:
+  embedding_uri: ${EMBEDDING_URI}
+  user_service: ${USER_SERVICE_URL}
+  news_service: ${NEWS_SERVICE}

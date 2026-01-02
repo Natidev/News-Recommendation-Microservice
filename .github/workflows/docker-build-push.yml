@@ -61,7 +61,7 @@ jobs:
       - name: build and push news service
         uses: docker/build-push-action@v5
         with:
-          context: ./back/news
+          context: ./back/news-service
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/news-service:latest
@@ -70,7 +70,7 @@ jobs:
       - name: build and push news fetcher service
         uses: docker/build-push-action@v5
         with:
-          context: ./back/news-fetcher
+          context: ./back/news-fetcher-service
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/news-fetcher-service:latest
