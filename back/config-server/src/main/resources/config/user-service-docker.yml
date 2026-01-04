@@ -33,9 +33,3 @@ jwt:
 uri:
   embedding_uri: ${AI_SERVICE_HOST:http://localhost:8999} #TODO
 
-eureka:
-  instance:
-    hostname: ${EUREKA_HOST}
-  client:
-    service-url:
-      defaultZone: ${DEFAULT_ZONE}

@@ -32,10 +32,3 @@ jwt:
 
 uri:
   embedding_uri: http://localhost:8999
-
-eureka:
-  instance:
-    hostname: localhost
-  client:
-    service-url:
-      defaultZone: http://localhost:8901/eureka

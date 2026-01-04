@@ -53,12 +53,6 @@ management:
       enabled: true
     health:
       show-details: always
-eureka:
-  instance:
-    hostname: ${EUREKA_HOST:localhost}
-  client:
-    service-url:
-      defaultZone: ${DEFAULT_ZONE:http://localhost:8901/eureka}
 jwt:
   secret: ${jwt_secret}
 logging:

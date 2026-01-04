@@ -28,12 +28,6 @@ management:
 fetcher:
   topic: raw-news
 
-eureka:
-  instance:
-    hostname: ${EUREKA_HOST}
-  client:
-    service-url:
-      defaultZone: ${DEFAULT_ZONE}
 news:
   providers:
     - name: "BBC"

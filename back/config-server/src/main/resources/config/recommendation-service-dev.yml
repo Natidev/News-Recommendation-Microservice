@@ -24,12 +24,7 @@ spring:
         spring.json.trusted.packages: "*"
         spring.json.value.default.type: com.ds.recommendationservice.models.EnrichedNewsPayload
         spring.json.use.type.headers: false
-eureka:
-  instance:
-    hostname: localhost
-  client:
-    service-url:
-      defaultZone: http://localhost:8901/eureka
+
 news:
   enriched_news_topic: news.enriched
   recommendation_created_topic: recommendation.created

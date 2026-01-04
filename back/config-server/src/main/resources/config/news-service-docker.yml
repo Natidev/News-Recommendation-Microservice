@@ -29,9 +29,3 @@ ai:
 
 server:
   port: 8902
-eureka:
-  instance:
-    hostname: ${EUREKA_HOST}
-  client:
-    service-url:
-      defaultZone: ${DEFAULT_ZONE}
