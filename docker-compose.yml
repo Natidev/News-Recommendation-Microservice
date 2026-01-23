@@ -67,10 +67,13 @@ services:
     command: ["redis-server", "--appendonly", "no"]
   discovery:
     build: ./back/discovery
+    depends_on:
+      - config-server
     networks:
       - ms-net
     environment:
       EUREKA_HOST: "discovery"
+  ##Since Discovery depends upon the config server therefore any oter container that depends on discovery depends on Configserver
   gateway:
     build: ./back/gateway
     depends_on:
@@ -99,7 +102,7 @@ services:
       - DEFAULT_ZONE=http://discovery:8901/eureka
       - FLYWAY_DB_URL=jdbc:postgresql://postgres:5432/auth
   news-service:
-    build: ./back/news
+    build: ./back/news-service
     networks:
       - ms-net
     depends_on:
@@ -115,7 +118,7 @@ services:
   ai-service:
     build: ./back/ai-service
   news-fetcher-service:
-    build: ./back/news-fetcher
+    build: ./back/news-fetcher-service
     networks:
       - ms-net
     depends_on:
@@ -141,6 +144,10 @@ services:
       EMBEDDING_URI: http//ai-service:8999
       USER_SERVICE_URL: http://user-service:8080
       EUREKA_HOST:  recommendation-service
+  config-server:
+    build: ./back/config-server
+    networks:
+      - ms-net
 networks:
   ms-net:
     driver: bridge
